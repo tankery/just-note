@@ -1,12 +1,12 @@
 # Just Note
 
-[![Build Status](https://travis-ci.org/tankery/note-app.svg?branch=master)](https://travis-ci.org/tankery/note-app)
+[![Build Status](https://travis-ci.org/tankery/just-note.svg?branch=master)](https://travis-ci.org/tankery/just-note)
 
 An open source notebook app to try new tech, in Android.
 
 Also I'm trying to use best practise solution for any problems encounter.
 So if you have better idea to how to solve specific problems,
-feel free to fire an [issue](https://github.com/tankery/note-app/issues) to talk about it,
+feel free to fire an [issue](https://github.com/tankery/just-note/issues) to talk about it,
 thanks in advance.
 
 ## Tech Stack
