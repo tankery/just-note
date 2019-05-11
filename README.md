@@ -1,5 +1,7 @@
 # Just Note
 
+[![Build Status](https://travis-ci.org/tankery/note-app.svg?branch=master)](https://travis-ci.org/tankery/note-app)
+
 An open source notebook app to try new tech, in Android.
 
 Also I'm trying to use best practise solution for any problems encounter.
