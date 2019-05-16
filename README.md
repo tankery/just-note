@@ -65,4 +65,4 @@ get things done from a high level perspective.
 
 Document List:
 
-- [Architecture](doc/architecture.md)
+- [Architecture Design](doc/architecture.md)
