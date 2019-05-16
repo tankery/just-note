@@ -131,15 +131,21 @@ So let's try to define some APIs:
 
 **Get metadata**
 
-`GET /notes?offset=20&limit=10`
+```
+GET /notes?offset=20&limit=10
+```
 
 or get from single note:
 
-`GET /notes/{noteId}/metadata`
+```
+GET /notes/{noteId}/metadata
+```
 
 **Get note files**
 
-`GET /notes/{noteId}/{filename}`
+```
+GET /notes/{noteId}/{filename}
+```
 
 First we can get `index.md`, then, load media files if need.
 
@@ -147,17 +153,23 @@ First we can get `index.md`, then, load media files if need.
 
 First, update or create metadata of a note
 
-`PUT /notes/{nodeId}`
+```
+PUT /notes/{nodeId}
+```
 
 with metadata in request body
 
 Second, upload note files:
 
-`PUT /notes/{nodeId}/{filename}`
+```
+PUT /notes/{nodeId}/{filename}
+```
 
 **Delete note forever**
 
-`DELETE /notes/{noteId}`
+```
+DELETE /notes/{noteId}
+```
 
 
 
