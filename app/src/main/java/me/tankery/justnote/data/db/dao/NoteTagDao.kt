@@ -23,6 +23,11 @@ interface NoteTagDao {
             "note_tag_join.tag_id = :tagId")
     fun getNotesOfTag(tagId: String): DataSource.Factory<Int, Note>
 
+    /**
+     * The case is a little complicated, that we can not using a INNER JOIN to solve.
+     * So I use a sub-query syntax, to first select notes with unwanted tag, then
+     * exclude then from the query result.
+     */
     @Query("SELECT * FROM note WHERE note.id NOT IN " +
             "(SELECT note_id FROM note_tag_join " +
             "WHERE note_tag_join.tag_id IN (:tagIds))")

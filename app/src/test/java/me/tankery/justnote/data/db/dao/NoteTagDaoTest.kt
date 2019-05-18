@@ -1,50 +1,30 @@
 package me.tankery.justnote.data.db.dao
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.toLiveData
-import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import me.tankery.justnote.data.db.NoteDatabase
 import me.tankery.justnote.data.db.pojo.NoteTagJoin
-import me.tankery.justnote.utils.Injections
-import me.tankery.justnote.utils.InjectionsRule
 import me.tankery.justnote.utils.getValueBlocking
 import me.tankery.justnote.utils.testJoins
 import me.tankery.justnote.utils.testNotes
 import me.tankery.justnote.utils.testTags
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class NoteTagDaoTest {
+class NoteTagDaoTest : DaoTest() {
 
-    @get:Rule
-    val injectionsRule = InjectionsRule()
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    private lateinit var database: NoteDatabase
     private lateinit var noteTagDao: NoteTagDao
 
     @Before
-    fun setUp() {
-        database = Room.inMemoryDatabaseBuilder(Injections.context, NoteDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+    override fun setUp() {
+        super.setUp()
         noteTagDao = database.noteTagDao()
 
         database.noteDao().insert(testNotes)
         database.tagDao().insert(testTags)
         noteTagDao.insert(testJoins)
-    }
-
-    @After
-    fun tearDown() {
-        database.close()
     }
 
     @Test

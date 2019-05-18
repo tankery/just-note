@@ -28,18 +28,12 @@ abstract class NoteDatabase : RoomDatabase() {
         // For Singleton instantiation
         @Volatile private var instance: NoteDatabase? = null
 
-        fun getInstance(context: Context): NoteDatabase {
-            return instance ?: synchronized(this) {
-                instance
-                    ?: buildDatabase(context).also { instance = it }
+        fun getInstance(context: Context) =
+            instance ?: synchronized(this) {
+                instance ?: buildDatabase(context).also { instance = it }
             }
-        }
 
-        private fun buildDatabase(context: Context): NoteDatabase {
-            return Room.databaseBuilder(context, NoteDatabase::class.java,
-                NOTE_DATABASE_NAME
-            )
-                .build()
-        }
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(context, NoteDatabase::class.java, NOTE_DATABASE_NAME).build()
     }
 }
