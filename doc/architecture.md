@@ -27,13 +27,10 @@ Each note is stored as an folder, with a index.md to record the text node, and o
 Each folder has a unique name, created from UUID.
 Each media file has a generated name, I use first 6 character of SHA1 of file content,
 if conflicts find, expand 2 character, and so on.
-The database file is place in the root with all of the notes folder.
 
 So the file system should be something like this:
 
 ```
-|
-+- notes.db
 |
 +- e0b0f196-5f10-4fc1-a083-031fdca5bc86/
 |  +- index.md
