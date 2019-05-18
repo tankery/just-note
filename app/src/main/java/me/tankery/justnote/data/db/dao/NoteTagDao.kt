@@ -13,12 +13,12 @@ import me.tankery.justnote.data.db.pojo.Tag
 
 @Dao
 interface NoteTagDao {
-    @Query("SELECT * FROM tag INNER JOIN note_tag_join ON " +
+    @Query("SELECT tag.* FROM tag INNER JOIN note_tag_join ON " +
             "tag.id=note_tag_join.tag_id WHERE " +
             "note_tag_join.note_id = :noteId")
     fun getTagOfNote(noteId: String): LiveData<List<Tag>>
 
-    @Query("SELECT * FROM note INNER JOIN note_tag_join ON " +
+    @Query("SELECT note.* FROM note INNER JOIN note_tag_join ON " +
             "note.id=note_tag_join.note_id WHERE " +
             "note_tag_join.tag_id = :tagId")
     fun getNotesOfTag(tagId: String): DataSource.Factory<Int, Note>
