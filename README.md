@@ -39,6 +39,7 @@ introduce those library without hesitation.
 Feature list (Road map):
 
 - [ ] Add, Delete, Edit text notes (Navigation, LiveData, Test, Files)
+- [ ] Text styles: bold, italic, underlines, etc. (Markdown)
 - [ ] Organize notes: tags, pin, archive (DB)
 - [ ] Share notes
 - [ ] Dynamic layout with content (RecyclerView, Coroutines)
@@ -48,7 +49,20 @@ Something may or may not add:
 
 - Sync notes with Server (OkHttp, Retrofit)
 - Sync notes with Google Drive, Dropbox, etc.
+- Compress file system.
 - Reminder, Todo list (Notification, WorkManager)
 - Search keyword in notes
 - Hand drawings
 - Record audio in note
+
+## Software Design Documents
+
+I believe that things will going better when we have plans.
+Software Design is the plan for how can we solve specific problem.
+
+So you may want to checkout these documents before reading the code, to see how I
+get things done from a high level perspective.
+
+Document List:
+
+- [Architecture Design](doc/architecture.md)
