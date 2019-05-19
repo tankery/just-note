@@ -1,9 +1,9 @@
 package me.tankery.justnote.data.db.dao
 
-import androidx.paging.toLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import me.tankery.justnote.data.db.pojo.Tag
 import me.tankery.justnote.utils.date
+import me.tankery.justnote.utils.findValueBlocking
 import me.tankery.justnote.utils.getValueBlocking
 import me.tankery.justnote.utils.testTags
 import org.assertj.core.api.Assertions.assertThat
@@ -20,23 +20,23 @@ class TagDaoTest : DaoTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        tagDao = database.tagDao()
-        tagDao.insert(testTags)
+        tagDao = database.tagDao().apply { insert(testTags) }
     }
 
     @Test
     fun testGetAllNodes() {
-        val tagsFactory = tagDao.getTags()
-        val tagList = tagsFactory.toLiveData(10).getValueBlocking()
+        val tagList = tagDao.getTags().getValueBlocking()
         val sortedTags = testTags.sortedByDescending { it.createTimestamp }
 
         assertThat(tagList.size).isEqualTo(sortedTags.size)
         for ((i, expect) in sortedTags.withIndex()) {
-            val tagFromDb = tagList[i]
-            assertThat(tagFromDb?.id).isEqualTo(expect.id)
-            assertThat(tagFromDb?.name).isEqualTo(expect.name)
-            assertThat(tagFromDb?.createTimestamp).isEqualTo(expect.createTimestamp)
-            assertThat(tagFromDb?.preserved).isEqualTo(expect.preserved)
+            val actual = tagList[i]
+            with(actual) {
+                assertThat(id).isEqualTo(expect.id)
+                assertThat(name).isEqualTo(expect.name)
+                assertThat(createTimestamp).isEqualTo(expect.createTimestamp)
+                assertThat(preserved).isEqualTo(expect.preserved)
+            }
         }
     }
 
@@ -45,9 +45,7 @@ class TagDaoTest : DaoTest() {
         val newTag = Tag("new", "New", date(Calendar.MAY,12))
         tagDao.insert(newTag)
 
-        val tagsFactory = tagDao.getTags()
-        val tagList = tagsFactory.toLiveData(10).getValueBlocking()
-        val tagFromDb = tagList.find { it.id == newTag.id }
+        val tagFromDb = tagDao.getTags().findValueBlocking { id == newTag.id }
 
         assertThat(tagFromDb).isNotNull
         assertThat(tagFromDb?.createTimestamp).isEqualTo(newTag.createTimestamp)
@@ -59,9 +57,7 @@ class TagDaoTest : DaoTest() {
         val duplicated = testTags[0].copy(name = "Updated")
         tagDao.insert(duplicated)
 
-        val tagsFactory = tagDao.getTags()
-        val tagList = tagsFactory.toLiveData(10).getValueBlocking()
-        val tagFromDb = tagList.find { it.id == duplicated.id }
+        val tagFromDb = tagDao.getTags().findValueBlocking { id == duplicated.id }
 
         assertThat(tagFromDb).isNotNull
         assertThat(tagFromDb?.name).isEqualTo(duplicated.name)
@@ -73,8 +69,7 @@ class TagDaoTest : DaoTest() {
         val duplicated2 = testTags[1].copy(name = "Updated 2")
         tagDao.insert(listOf(duplicated1, duplicated2))
 
-        val tagsFactory = tagDao.getTags()
-        val tagList = tagsFactory.toLiveData(10).getValueBlocking()
+        val tagList = tagDao.getTags().getValueBlocking()
 
         val tagFromDb1 = tagList.find { it.id == duplicated1.id }
         assertThat(tagFromDb1).isNotNull
@@ -89,9 +84,7 @@ class TagDaoTest : DaoTest() {
     fun testDelete() {
         tagDao.delete("task")
 
-        val tagsFactory = tagDao.getTags()
-        val tagList = tagsFactory.toLiveData(10).getValueBlocking()
-        val tagFromDb = tagList.find { it.id == "task" }
+        val tagFromDb = tagDao.getTags().findValueBlocking { id == "task" }
 
         assertThat(tagFromDb).isNull()
     }
@@ -100,9 +93,7 @@ class TagDaoTest : DaoTest() {
     fun testDeletePreserved() {
         tagDao.delete("_archived_")
 
-        val tagsFactory = tagDao.getTags()
-        val tagList = tagsFactory.toLiveData(10).getValueBlocking()
-        val tagFromDb = tagList.find { it.id == "_archived_" }
+        val tagFromDb = tagDao.getTags().findValueBlocking { id == "_archived_" }
 
         assertThat(tagFromDb).isNotNull
     }

@@ -11,6 +11,7 @@ import me.tankery.justnote.data.db.dao.TagDao
 import me.tankery.justnote.data.db.pojo.Note
 import me.tankery.justnote.data.db.pojo.NoteTagJoin
 import me.tankery.justnote.data.db.pojo.Tag
+import me.tankery.justnote.utils.Injections
 import me.tankery.justnote.utils.NOTE_DATABASE_NAME
 
 @Database(
@@ -25,13 +26,7 @@ abstract class NoteDatabase : RoomDatabase() {
     abstract fun noteTagDao(): NoteTagDao
 
     companion object {
-        // For Singleton instantiation
-        @Volatile private var instance: NoteDatabase? = null
-
-        fun getInstance(context: Context) =
-            instance ?: synchronized(this) {
-                instance ?: buildDatabase(context).also { instance = it }
-            }
+        val instance by lazy { buildDatabase(Injections.context) }
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context, NoteDatabase::class.java, NOTE_DATABASE_NAME).build()

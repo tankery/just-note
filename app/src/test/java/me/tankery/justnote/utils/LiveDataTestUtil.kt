@@ -1,5 +1,7 @@
 package me.tankery.justnote.utils
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
+import androidx.paging.toLiveData
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -23,3 +25,12 @@ fun <T> LiveData<T>.getValueBlocking(): T {
     @Suppress("UNCHECKED_CAST")
     return data[0] as T
 }
+
+fun <T> DataSource.Factory<Int, T>.getValueBlocking(): List<T> =
+        toLiveData(20).getValueBlocking()
+
+fun <T, R> DataSource.Factory<Int, T>.mapValueBlocking(mapping: T.() -> R): List<R> =
+        getValueBlocking().map(mapping)
+
+fun <T> DataSource.Factory<Int, T>.findValueBlocking(finding: T.() -> Boolean): T? =
+        getValueBlocking().find(finding)
