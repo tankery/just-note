@@ -1,9 +1,9 @@
 package me.tankery.justnote.data.db.dao
 
-import androidx.paging.toLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import me.tankery.justnote.data.db.pojo.NoteTagJoin
 import me.tankery.justnote.utils.getValueBlocking
+import me.tankery.justnote.utils.mapValueBlocking
 import me.tankery.justnote.utils.testJoins
 import me.tankery.justnote.utils.testNotes
 import me.tankery.justnote.utils.testTags
@@ -20,11 +20,9 @@ class NoteTagDaoTest : DaoTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        noteTagDao = database.noteTagDao()
-
         database.noteDao().insert(testNotes)
         database.tagDao().insert(testTags)
-        noteTagDao.insert(testJoins)
+        noteTagDao = database.noteTagDao().apply { insert(testJoins) }
     }
 
     @Test
@@ -37,16 +35,16 @@ class NoteTagDaoTest : DaoTest() {
 
     @Test
     fun testGetNotesOfTag() {
-        val notesFactory = noteTagDao.getNotesOfTag("_archived_")
-        val noteIds = notesFactory.toLiveData(10).getValueBlocking().map { it.id }
+        val noteIds = noteTagDao.getNotesOfTag("_archived_")
+            .mapValueBlocking { id }
 
         assertThat(noteIds).containsExactly("note-1", "note-2")
     }
 
     @Test
     fun testGetNotesNotTag() {
-        val notesFactory = noteTagDao.getNotesNotTag("_deleted_", "_archived_")
-        val noteIds = notesFactory.toLiveData(10).getValueBlocking().map { it.id }
+        val noteIds = noteTagDao.getNotesNotTag("_deleted_", "_archived_")
+            .mapValueBlocking { id }
 
         assertThat(noteIds).containsExactly("note-0", "note-3")
     }
@@ -56,8 +54,8 @@ class NoteTagDaoTest : DaoTest() {
         val join = NoteTagJoin(testNotes[3].id, "good_stuff")
         noteTagDao.insert(join)
 
-        val notesFactory = noteTagDao.getNotesOfTag("good_stuff")
-        val noteIds = notesFactory.toLiveData(10).getValueBlocking().map { it.id }
+        val noteIds = noteTagDao.getNotesOfTag("good_stuff")
+            .mapValueBlocking { id }
 
         assertThat(noteIds).containsExactly("note-3")
     }
@@ -67,8 +65,8 @@ class NoteTagDaoTest : DaoTest() {
         val join = NoteTagJoin(testNotes[0].id, "task")
         noteTagDao.insert(join)
 
-        val notesFactory = noteTagDao.getNotesOfTag("task")
-        val noteIds = notesFactory.toLiveData(10).getValueBlocking().map { it.id }
+        val noteIds = noteTagDao.getNotesOfTag("task")
+            .mapValueBlocking { id }
 
         assertThat(noteIds).contains("note-0")
     }
@@ -78,8 +76,8 @@ class NoteTagDaoTest : DaoTest() {
         val join = NoteTagJoin(testNotes[0].id, "task")
         noteTagDao.delete(join)
 
-        val notesFactory = noteTagDao.getNotesOfTag("task")
-        val noteIds = notesFactory.toLiveData(10).getValueBlocking().map { it.id }
+        val noteIds = noteTagDao.getNotesOfTag("task")
+            .mapValueBlocking { id }
 
         assertThat(noteIds).doesNotContain("note-0")
     }
@@ -89,8 +87,8 @@ class NoteTagDaoTest : DaoTest() {
         val join = NoteTagJoin(testNotes[3].id, "task")
         noteTagDao.delete(join)
 
-        val notesFactory = noteTagDao.getNotesOfTag("task")
-        val noteIds = notesFactory.toLiveData(10).getValueBlocking().map { it.id }
+        val noteIds = noteTagDao.getNotesOfTag("task")
+            .mapValueBlocking { id }
 
         assertThat(noteIds).containsExactly("note-0", "note-2")
     }

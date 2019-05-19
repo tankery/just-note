@@ -1,9 +1,9 @@
 package me.tankery.justnote.data.db.dao
 
-import androidx.paging.toLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import me.tankery.justnote.data.db.pojo.Note
 import me.tankery.justnote.utils.date
+import me.tankery.justnote.utils.findValueBlocking
 import me.tankery.justnote.utils.getValueBlocking
 import me.tankery.justnote.utils.testNotes
 import org.assertj.core.api.Assertions.assertThat
@@ -20,24 +20,24 @@ class NoteDaoTest : DaoTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        noteDao = database.noteDao()
-        noteDao.insert(testNotes)
+        noteDao = database.noteDao().apply { insert(testNotes) }
     }
 
     @Test
     fun testGetAllNodes() {
-        val notesFactory = noteDao.getNotes()
-        val noteList = notesFactory.toLiveData(10).getValueBlocking()
+        val noteList = noteDao.getNotes().getValueBlocking()
         val sortedNotes = testNotes.sortedByDescending { it.updateTimestamp }
 
         assertThat(noteList.size).isEqualTo(testNotes.size)
         for ((i, expect) in sortedNotes.withIndex()) {
-            val noteFromDb = noteList[i]
-            assertThat(noteFromDb?.id).isEqualTo(expect.id)
-            assertThat(noteFromDb?.createTimestamp).isEqualTo(expect.createTimestamp)
-            assertThat(noteFromDb?.updateTimestamp).isEqualTo(expect.updateTimestamp)
-            assertThat(noteFromDb?.title).isEqualTo(expect.title)
-            assertThat(noteFromDb?.abstractContent).isEqualTo(expect.abstractContent)
+            val actual = noteList[i]
+            with(actual) {
+                assertThat(id).isEqualTo(expect.id)
+                assertThat(createTimestamp).isEqualTo(expect.createTimestamp)
+                assertThat(updateTimestamp).isEqualTo(expect.updateTimestamp)
+                assertThat(title).isEqualTo(expect.title)
+                assertThat(abstractContent).isEqualTo(expect.abstractContent)
+            }
         }
     }
 
@@ -46,9 +46,7 @@ class NoteDaoTest : DaoTest() {
         val newNote = Note(createTimestamp = date(Calendar.MAY,12), title = "May day of 12")
         noteDao.insert(newNote)
 
-        val notesFactory = noteDao.getNotes()
-        val noteList = notesFactory.toLiveData(10).getValueBlocking()
-        val noteFromDb = noteList.find { it.id == newNote.id }
+        val noteFromDb = noteDao.getNotes().findValueBlocking { id == newNote.id }
 
         assertThat(noteFromDb).isNotNull
         assertThat(noteFromDb?.updateTimestamp).isEqualTo(newNote.updateTimestamp)
@@ -60,9 +58,7 @@ class NoteDaoTest : DaoTest() {
         val duplicated = testNotes[0].copy(updateTimestamp = Calendar.getInstance(), abstractContent = "Updated")
         noteDao.insert(duplicated)
 
-        val notesFactory = noteDao.getNotes()
-        val noteList = notesFactory.toLiveData(10).getValueBlocking()
-        val noteFromDb = noteList.find { it.id == duplicated.id }
+        val noteFromDb = noteDao.getNotes().findValueBlocking { id == duplicated.id }
 
         assertThat(noteFromDb).isNotNull
         assertThat(noteFromDb?.updateTimestamp).isEqualTo(duplicated.updateTimestamp)
@@ -75,8 +71,7 @@ class NoteDaoTest : DaoTest() {
         val duplicated2 = testNotes[2].copy(updateTimestamp = Calendar.getInstance(), abstractContent = "Updated 2")
         noteDao.insert(listOf(duplicated1, duplicated2))
 
-        val notesFactory = noteDao.getNotes()
-        val noteList = notesFactory.toLiveData(10).getValueBlocking()
+        val noteList = noteDao.getNotes().getValueBlocking()
 
         val noteFromDb1 = noteList.find { it.id == duplicated1.id }
         assertThat(noteFromDb1).isNotNull
@@ -94,9 +89,7 @@ class NoteDaoTest : DaoTest() {
         val toBeDelete = testNotes[0].copy()
         noteDao.delete(toBeDelete)
 
-        val notesFactory = noteDao.getNotes()
-        val noteList = notesFactory.toLiveData(10).getValueBlocking()
-        val noteFromDb = noteList.find { it.id == toBeDelete.id }
+        val noteFromDb = noteDao.getNotes().findValueBlocking { id == toBeDelete.id }
 
         assertThat(noteFromDb).isNull()
     }

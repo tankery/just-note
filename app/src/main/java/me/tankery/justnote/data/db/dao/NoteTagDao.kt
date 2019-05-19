@@ -13,14 +13,18 @@ import me.tankery.justnote.data.db.pojo.Tag
 
 @Dao
 interface NoteTagDao {
-    @Query("SELECT tag.* FROM tag INNER JOIN note_tag_join ON " +
-            "tag.id=note_tag_join.tag_id WHERE " +
-            "note_tag_join.note_id = :noteId")
+    @Query("""
+        SELECT tag.* FROM tag INNER JOIN note_tag_join ON
+        tag.id = note_tag_join.tag_id WHERE
+        note_tag_join.note_id = :noteId
+    """)
     fun getTagOfNote(noteId: String): LiveData<List<Tag>>
 
-    @Query("SELECT note.* FROM note INNER JOIN note_tag_join ON " +
-            "note.id=note_tag_join.note_id WHERE " +
-            "note_tag_join.tag_id = :tagId")
+    @Query("""
+        SELECT note.* FROM note INNER JOIN note_tag_join ON
+        note.id=note_tag_join.note_id WHERE
+        note_tag_join.tag_id = :tagId
+    """)
     fun getNotesOfTag(tagId: String): DataSource.Factory<Int, Note>
 
     /**
@@ -28,9 +32,11 @@ interface NoteTagDao {
      * So I use a sub-query syntax, to first select notes with unwanted tag, then
      * exclude then from the query result.
      */
-    @Query("SELECT * FROM note WHERE note.id NOT IN " +
-            "(SELECT note_id FROM note_tag_join " +
-            "WHERE note_tag_join.tag_id IN (:tagIds))")
+    @Query("""
+        SELECT * FROM note WHERE note.id NOT IN
+        (SELECT note_id FROM note_tag_join WHERE
+        note_tag_join.tag_id IN (:tagIds))
+    """)
     fun getNotesNotTag(vararg tagIds: String): DataSource.Factory<Int, Note>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
