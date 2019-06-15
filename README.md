@@ -1,6 +1,7 @@
 # Just Note
 
 [![Build Status](https://travis-ci.org/tankery/just-note.svg?branch=master)](https://travis-ci.org/tankery/just-note)
+[![Work In Progress](https://img.shields.io/badge/In%20Progress-5%25-yellow.svg?style=flat)](https://github.com/tankery/just-note/projects/1)
 
 An open source notebook app to try new tech, in Android.
 
@@ -36,7 +37,7 @@ introduce those library without hesitation.
 
 ## Features and Technologies
 
-Feature list (Road map):
+Feature list:
 
 - [ ] Add, Delete, Edit text notes (Navigation, LiveData, Test, Files)
 - [ ] Text styles: bold, italic, underlines, etc. (Markdown)
@@ -54,6 +55,13 @@ Something may or may not add:
 - Search keyword in notes
 - Hand drawings
 - Record audio in note
+
+## Road map and planning
+
+This project is still Working In Progress,
+and I use [GitHub Project Boards](https://help.github.com/en/articles/about-project-boards) to manage the progress.
+
+You can checkout [Projects](https://github.com/tankery/just-note/projects) tab to learn the working status of this project.
 
 ## Software Design Documents
 
