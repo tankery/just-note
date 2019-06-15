@@ -1,4 +1,6 @@
-package me.tankery.justnote.data.db
+package me.tankery.justnote.data
+
+import me.tankery.justnote.data.db.NoteDatabase
 
 class NoteRepository private constructor(database: NoteDatabase) {
     private val noteDao = database.noteDao()
