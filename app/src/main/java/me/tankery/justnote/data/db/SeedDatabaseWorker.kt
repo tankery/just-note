@@ -10,6 +10,9 @@ import me.tankery.justnote.data.db.pojo.Tag
 import me.tankery.justnote.utils.RES_PRESERVED_TAGS
 import timber.log.Timber
 
+/**
+ * Seeding database with prepared tags
+ */
 class SeedDatabaseWorker(
     context: Context,
     workerParams: WorkerParameters

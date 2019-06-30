@@ -38,8 +38,9 @@ abstract class NoteDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         Timber.i("Creating database")
-                        val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
-                        WorkManager.getInstance().enqueue(request)
+
+                        WorkManager.getInstance().enqueue(OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build())
+                        WorkManager.getInstance().enqueue(OneTimeWorkRequestBuilder<SeedFilesystemWorker>().build())
                     }
                 })
                 .build()
