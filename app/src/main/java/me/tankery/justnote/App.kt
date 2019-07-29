@@ -1,6 +1,8 @@
 package me.tankery.justnote
 
 import android.app.Application
+import android.content.pm.PackageManager
+import me.tankery.justnote.data.NoteRepository
 import me.tankery.justnote.utils.Injections
 import me.tankery.justnote.utils.TAG_MAP
 import timber.log.Timber
@@ -13,6 +15,18 @@ class App : Application() {
         Timber.plant(TimberTree())
 
         Injections.application = this
+
+        try {
+            val info = packageManager.getPackageInfo(packageName, 0)
+            @Suppress("DEPRECATION")
+            Timber.i("App created, version %s (%s)", info.versionName, info.versionCode)
+        } catch (e: PackageManager.NameNotFoundException) {
+            Timber.w("App created, can't get version info")
+        }
+
+        // FIXME: For DEBUG purpose only
+        NoteRepository.instance.getNotesCount()
+            .observeForever { Timber.i("Got notes count as %d", it) }
     }
 }
 

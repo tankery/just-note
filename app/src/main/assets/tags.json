@@ -2,19 +2,19 @@
   {
     "id" : "_deleted_",
     "name" : "Deleted",
-    "create_timestamp" : 0,
+    "create_timestamp" : 1,
     "preserved" : true
   },
   {
     "id" : "_archived_",
     "name" : "Archived",
-    "create_timestamp" : 1,
+    "create_timestamp" : 2,
     "preserved" : true
   },
   {
     "id" : "_pinned_",
     "name" : "Pinned",
-    "create_timestamp" : 2,
+    "create_timestamp" : 3,
     "preserved" : true
   }
 ]
