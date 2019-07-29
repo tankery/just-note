@@ -41,8 +41,8 @@ abstract class NoteDatabase : RoomDatabase() {
                         super.onCreate(db)
                         Timber.i("Creating database")
 
-                        WorkManager.getInstance().enqueue(OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build())
-                        WorkManager.getInstance().enqueue(OneTimeWorkRequestBuilder<SeedFilesystemWorker>().build())
+                        WorkManager.getInstance(context).enqueue(OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build())
+                        WorkManager.getInstance(context).enqueue(OneTimeWorkRequestBuilder<SeedFilesystemWorker>().build())
                     }
                 })
                 .build()

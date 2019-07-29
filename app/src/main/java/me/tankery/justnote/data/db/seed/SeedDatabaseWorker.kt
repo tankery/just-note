@@ -14,7 +14,6 @@ import me.tankery.justnote.utils.RES_PRESERVED_TAGS
 import me.tankery.justnote.utils.RES_SAMPLE_NOTES
 import me.tankery.justnote.utils.RES_TAG_JOINS
 import timber.log.Timber
-import java.lang.reflect.Type
 
 /**
  * Seeding database with prepared tags
@@ -26,9 +25,9 @@ class SeedDatabaseWorker(
 
     override fun doWork(): Result =
         try {
-            val tags = readData<List<Tag>>(RES_PRESERVED_TAGS, object : TypeToken<List<Tag>>() {}.type)
-            val notes = readData<List<Note>>(RES_SAMPLE_NOTES, object : TypeToken<List<Note>>() {}.type)
-            val joins = readData<List<NoteTagJoin>>(RES_TAG_JOINS, object : TypeToken<List<NoteTagJoin>>() {}.type)
+            val tags = readData<List<Tag>>(RES_PRESERVED_TAGS)
+            val notes = readData<List<Note>>(RES_SAMPLE_NOTES)
+            val joins = readData<List<NoteTagJoin>>(RES_TAG_JOINS)
 
             NoteDatabase.instance.tagDao().insert(tags)
             NoteDatabase.instance.noteDao().insert(notes)
@@ -43,10 +42,10 @@ class SeedDatabaseWorker(
             Result.failure()
         }
 
-    private fun <T> readData(filename : String, type : Type): T =
+    private inline fun <reified T> readData(filename: String): T =
         applicationContext.assets.open(filename).use { inputStream ->
             JsonReader(inputStream.reader()).use { jsonReader ->
-                return Injections.gson.fromJson(jsonReader, type)
+                return Injections.gson.fromJson(jsonReader, object : TypeToken<T>() {}.type)
             }
         }
 }
