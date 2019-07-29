@@ -24,6 +24,13 @@ class NoteDaoTest : DaoTest() {
     }
 
     @Test
+    fun testGetNodesCount() {
+        val notesCount = noteDao.getCount().getValueBlocking()
+
+        assertThat(notesCount).isEqualTo(testNotes.size)
+    }
+
+    @Test
     fun testGetAllNodes() {
         val noteList = noteDao.getNotes().getValueBlocking()
         val sortedNotes = testNotes.sortedByDescending { it.updateTimestamp }

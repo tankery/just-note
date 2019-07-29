@@ -26,6 +26,9 @@ fun <T> LiveData<T>.getValueBlocking(): T {
     return data[0] as T
 }
 
+fun <T> LiveData<List<T>>.findValueBlocking(finding: T.() -> Boolean): T? =
+    getValueBlocking().find(finding)
+
 fun <T> DataSource.Factory<Int, T>.getValueBlocking(): List<T> =
         toLiveData(20).getValueBlocking()
 
