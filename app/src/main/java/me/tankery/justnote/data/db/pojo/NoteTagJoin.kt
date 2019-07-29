@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import com.google.gson.annotations.SerializedName
 
 @Entity(
     tableName = "note_tag_join",
@@ -22,6 +23,11 @@ import androidx.room.Index
     ]
 )
 data class NoteTagJoin(
-    @ColumnInfo(name = "note_id") val noteId: String,
-    @ColumnInfo(name = "tag_id") val tagId: String
+    @ColumnInfo(name = "note_id")
+    @SerializedName("note_id")
+    val noteId: String,
+
+    @ColumnInfo(name = "tag_id")
+    @SerializedName("tag_id")
+    val tagId: String
 )

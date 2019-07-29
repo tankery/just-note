@@ -1,4 +1,4 @@
-package me.tankery.justnote.data.db
+package me.tankery.justnote.data.db.seed
 
 import android.content.Context
 import androidx.work.Worker

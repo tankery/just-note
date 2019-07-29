@@ -14,6 +14,8 @@ import me.tankery.justnote.data.db.dao.TagDao
 import me.tankery.justnote.data.db.pojo.Note
 import me.tankery.justnote.data.db.pojo.NoteTagJoin
 import me.tankery.justnote.data.db.pojo.Tag
+import me.tankery.justnote.data.db.seed.SeedDatabaseWorker
+import me.tankery.justnote.data.db.seed.SeedFilesystemWorker
 import me.tankery.justnote.utils.Injections
 import me.tankery.justnote.utils.NOTE_DATABASE_NAME
 import timber.log.Timber

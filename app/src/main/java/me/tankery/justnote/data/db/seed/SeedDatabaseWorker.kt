@@ -1,14 +1,15 @@
-package me.tankery.justnote.data.db
+package me.tankery.justnote.data.db.seed
 
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
+import me.tankery.justnote.data.db.NoteDatabase
 import me.tankery.justnote.data.db.pojo.Note
 import me.tankery.justnote.data.db.pojo.NoteTagJoin
 import me.tankery.justnote.data.db.pojo.Tag
+import me.tankery.justnote.utils.Injections
 import me.tankery.justnote.utils.RES_PRESERVED_TAGS
 import me.tankery.justnote.utils.RES_SAMPLE_NOTES
 import me.tankery.justnote.utils.RES_TAG_JOINS
@@ -45,7 +46,7 @@ class SeedDatabaseWorker(
     private fun <T> readData(filename : String, type : Type): T =
         applicationContext.assets.open(filename).use { inputStream ->
             JsonReader(inputStream.reader()).use { jsonReader ->
-                return Gson().fromJson(jsonReader, type)
+                return Injections.gson.fromJson(jsonReader, type)
             }
         }
 }
