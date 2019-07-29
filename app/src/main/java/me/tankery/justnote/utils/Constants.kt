@@ -24,6 +24,14 @@ const val NOTE_FILESYSTEM_ROOT = "notes"
  */
 const val RES_PRESERVED_TAGS = "tags.json"
 /**
+ * Sample notes are inserted to database when create
+ */
+const val RES_SAMPLE_NOTES = "notes.json"
+/**
+ * Note-tag joins are inserted to database when create
+ */
+const val RES_TAG_JOINS = "joins.json"
+/**
  * Some sample notes will be copied from assets to storage when App create
  */
 const val RES_SAMPLE_NOTES_DIR = "notes"
