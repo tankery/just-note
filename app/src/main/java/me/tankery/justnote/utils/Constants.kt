@@ -10,6 +10,10 @@ val TAG_MAP = listOf(
     "me.tankery.justnote" to "jn.app"
 )
 
+const val PRESERVED_TAG_DELETED = "_deleted_"
+const val PRESERVED_TAG_ARCHIVED = "_archived_"
+const val PRESERVED_TAG_PINNED = "_pinned_"
+
 /**
  * Database named as note.db
  */

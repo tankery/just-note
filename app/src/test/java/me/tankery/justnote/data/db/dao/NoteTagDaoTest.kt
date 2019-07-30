@@ -38,7 +38,7 @@ class NoteTagDaoTest : DaoTest() {
         val noteIds = noteTagDao.getNotesOfTag("_archived_")
             .mapValueBlocking { id }
 
-        assertThat(noteIds).containsExactly("note-1", "note-2")
+        assertThat(noteIds).containsExactly("note-2", "note-1")
     }
 
     @Test
@@ -46,7 +46,15 @@ class NoteTagDaoTest : DaoTest() {
         val noteIds = noteTagDao.getNotesNotTag("_deleted_", "_archived_")
             .mapValueBlocking { id }
 
-        assertThat(noteIds).containsExactly("note-0", "note-3")
+        assertThat(noteIds).containsExactly("note-3", "note-0")
+    }
+
+    @Test
+    fun testGetNotesOfTagWithException() {
+        val noteIds = noteTagDao.getNotesOfTag("task", "_deleted_", "_archived_")
+            .mapValueBlocking { id }
+
+        assertThat(noteIds).containsExactly("note-0")
     }
 
     @Test
@@ -90,7 +98,7 @@ class NoteTagDaoTest : DaoTest() {
         val noteIds = noteTagDao.getNotesOfTag("task")
             .mapValueBlocking { id }
 
-        assertThat(noteIds).containsExactly("note-0", "note-2")
+        assertThat(noteIds).containsExactly("note-2", "note-0")
     }
 
 }
