@@ -49,7 +49,7 @@ interface NoteTagDao {
     fun getNotesNotTag(vararg tagIds: String): DataSource.Factory<Int, Note>
 
     /**
-     * The case is a more complicated, it combines #getNotesOfTag and #getNotesNotTag.
+     * The case is more complicated, it combines #getNotesOfTag and #getNotesNotTag.
      * It use result of #getNotesOfTag as a table to query, then filter out using
      * sub-query in #getNotesNotTag
      */

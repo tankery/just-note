@@ -35,6 +35,9 @@ class NoteRepository private constructor(database: NoteDatabase) {
     fun getActiveNotes(): DataSource.Factory<Int, NoteItem> =
         noteTagDao.getNotesNotTag(PRESERVED_TAG_DELETED, PRESERVED_TAG_ARCHIVED)
             .map {
+                // #map is working on loader's thread, so I think it's safe to
+                // execute another query
+                // TODO: check the performance of this mapping
                 NoteItem(it, noteTagDao.getTagOfNoteDirect(it.id))
             }
 
