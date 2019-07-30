@@ -21,9 +21,17 @@ interface NoteTagDao {
     fun getTagOfNote(noteId: String): LiveData<List<Tag>>
 
     @Query("""
+        SELECT tag.* FROM tag INNER JOIN note_tag_join ON
+        tag.id = note_tag_join.tag_id WHERE
+        note_tag_join.note_id = :noteId
+    """)
+    fun getTagOfNoteDirect(noteId: String): List<Tag>
+
+    @Query("""
         SELECT note.* FROM note INNER JOIN note_tag_join ON
         note.id=note_tag_join.note_id WHERE
         note_tag_join.tag_id = :tagId
+        ORDER BY note.update_timestamp DESC
     """)
     fun getNotesOfTag(tagId: String): DataSource.Factory<Int, Note>
 
@@ -36,8 +44,26 @@ interface NoteTagDao {
         SELECT * FROM note WHERE note.id NOT IN
         (SELECT note_id FROM note_tag_join WHERE
         note_tag_join.tag_id IN (:tagIds))
+        ORDER BY note.update_timestamp DESC
     """)
     fun getNotesNotTag(vararg tagIds: String): DataSource.Factory<Int, Note>
+
+    /**
+     * The case is more complicated, it combines #getNotesOfTag and #getNotesNotTag.
+     * It use result of #getNotesOfTag as a table to query, then filter out using
+     * sub-query in #getNotesNotTag
+     */
+    @Query("""
+        SELECT * FROM
+        (SELECT note.* FROM note INNER JOIN note_tag_join ON
+        note.id=note_tag_join.note_id WHERE
+        note_tag_join.tag_id = :tagId) as note
+        WHERE note.id NOT IN
+        (SELECT note_id FROM note_tag_join WHERE
+        note_tag_join.tag_id IN (:excludeTagIds))
+        ORDER BY note.update_timestamp DESC
+    """)
+    fun getNotesOfTag(tagId: String, vararg excludeTagIds: String): DataSource.Factory<Int, Note>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg joins: NoteTagJoin)

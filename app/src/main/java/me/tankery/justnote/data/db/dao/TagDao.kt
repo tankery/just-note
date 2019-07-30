@@ -12,6 +12,9 @@ interface TagDao {
     @Query("SELECT * FROM tag ORDER BY create_timestamp DESC")
     fun getTags(): LiveData<List<Tag>>
 
+    @Query("SELECT * FROM tag WHERE tag.preserved = 0 ORDER BY create_timestamp DESC")
+    fun getCustomTags(): LiveData<List<Tag>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(tags: List<Tag>)
 
