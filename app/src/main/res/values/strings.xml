@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Just Note</string>
+
+    <string name="navigation_all_notes">All Notes</string>
+    <string name="navigation_tags">Tags</string>
+    <string name="navigation_tags_new">Create New Tag</string>
 </resources>

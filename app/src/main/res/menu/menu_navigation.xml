@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_notes"
+            android:checked="true"
+            android:title="@string/navigation_all_notes"/>
+
+        <item
+            android:id="@+id/nav_tags"
+            android:title="@string/navigation_tags">
+            <menu>
+                <item
+                    android:id="@+id/nav_new_tag"
+                    android:title="@string/navigation_tags_new"/>
+            </menu>
+        </item>
+    </group>
+
+</menu>

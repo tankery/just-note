@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/nav_all_notes">
+
+    <fragment
+        android:id="@+id/nav_all_notes"
+        android:name="me.tankery.justnote.ui.list.MainNotesFragment"
+        android:label="@string/navigation_all_notes"/>
+</navigation>
