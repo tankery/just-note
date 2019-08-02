@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="navigation_drawer_header_height">128dp</dimen>
+
+    <dimen name="main_list_card_elevation">2dp</dimen>
 </resources>
