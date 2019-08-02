@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import me.tankery.justnote.utils.Injections
 import me.tankery.justnote.utils.NOTE_ENTRANCE_FILE
 import me.tankery.justnote.utils.getNotesRoot
+import timber.log.Timber
 import java.io.File
 
 /**
@@ -30,6 +31,7 @@ class NoteFileReader(
             val content =
                 if (entranceFile.isFile) entranceFile.readText(Charsets.UTF_8)
                 else ""
+            Timber.d("Read %d bytes content for %s", content.length, noteId)
             liveData.postValue(content)
         }
         return liveData
