@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="?android:listPreferredItemPaddingStart"
-    android:layout_marginEnd="?android:listPreferredItemPaddingEnd"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    android:foreground="?selectableItemBackground">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        style="@style/Widget.ListItem">
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:paddingStart="?android:listPreferredItemPaddingStart"
+        android:paddingEnd="?android:listPreferredItemPaddingEnd"
+        android:paddingTop="24dp"
+        android:paddingBottom="48dp">
 
         <TextView
             android:id="@android:id/title"
@@ -29,7 +27,7 @@
             android:layout_height="4dp"/>
 
         <TextView
-            android:id="@android:id/summary"
+            android:id="@android:id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceSmall"
@@ -37,7 +35,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="8dp"/>
+            android:layout_height="36dp"/>
 
         <TextView
             android:id="@android:id/hint"
@@ -48,4 +46,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</ScrollView>

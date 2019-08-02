@@ -14,6 +14,9 @@ interface NoteDao {
     @Query("SELECT * FROM note ORDER BY update_timestamp DESC")
     fun getNotes(): DataSource.Factory<Int, Note>
 
+    @Query("SELECT * FROM note WHERE id = :noteId")
+    fun getNote(noteId: String): LiveData<Note>
+
     @Query("SELECT COUNT(*) FROM note")
     fun getCount(): LiveData<Int>
 

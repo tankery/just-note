@@ -7,5 +7,22 @@
     <fragment
         android:id="@+id/nav_all_notes"
         android:name="me.tankery.justnote.ui.list.MainNotesFragment"
-        android:label="@string/navigation_all_notes"/>
+        android:label="@string/navigation_all_notes">
+        <action
+            android:id="@+id/action_nav_all_notes_to_note_details"
+            app:destination="@id/note_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/note_details"
+        android:name="me.tankery.justnote.ui.detail.NoteFragment"
+        android:label=""
+        >
+        <argument
+            android:name="noteId"
+            app:argType="string"/>
+    </fragment>
 </navigation>

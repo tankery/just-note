@@ -29,6 +29,7 @@ buildscript {
                 fragment        : '1.1.0-rc03',
                 material        : '1.0.0',
                 recyclerView    : '1.0.0',
+                cardView        : '1.0.0',
                 glide           : '4.9.0',
 
                 gson            : '2.8.5',

@@ -1,6 +1,9 @@
 package me.tankery.justnote.utils
 
 import android.content.res.AssetManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -34,3 +37,32 @@ fun AssetManager.copyFile(path: String, dest: File): Int {
 
     return 1
 }
+
+fun <T, K, S> LiveData<T>.combineWith(
+    source: LiveData<K>,
+    combine: (data1: T?, data2: K?) -> S) : LiveData<S> =
+
+    object : MediatorLiveData<S>() {
+
+        private var data1: T? = null
+        private var data2: K? = null
+
+        init {
+            super.addSource(this@combineWith) {
+                data1 = it
+                value = combine(data1, data2)
+            }
+            super.addSource(source) {
+                data2 = it
+                value = combine(data1, data2)
+            }
+        }
+
+        override fun <S : Any?> addSource(source: LiveData<S>, onChanged: Observer<in S>) {
+            throw UnsupportedOperationException()
+        }
+
+        override fun <S : Any?> removeSource(toRemote: LiveData<S>) {
+            throw UnsupportedOperationException()
+        }
+    }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import me.tankery.justnote.R
 import me.tankery.justnote.data.pojo.NoteItem
@@ -29,11 +30,18 @@ class NoteListViewHolder(parent: ViewGroup) :
             textHint.visibility = View.VISIBLE
             textHint.text = note.tags.joinToString { it.name }
         }
+
+        itemView.setOnClickListener {
+            val directions = MainNotesFragmentDirections.actionNavAllNotesToNoteDetails(note.note.id)
+            it.findNavController().navigate(directions)
+        }
     }
 
     fun clear() {
         textTitle.text = null
         textSummary.text = null
         textHint.visibility = View.GONE
+
+        itemView.setOnClickListener(null)
     }
 }

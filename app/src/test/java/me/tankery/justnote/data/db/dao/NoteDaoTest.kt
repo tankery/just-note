@@ -24,14 +24,14 @@ class NoteDaoTest : DaoTest() {
     }
 
     @Test
-    fun testGetNodesCount() {
+    fun testGetNotesCount() {
         val notesCount = noteDao.getCount().getValueBlocking()
 
         assertThat(notesCount).isEqualTo(testNotes.size)
     }
 
     @Test
-    fun testGetAllNodes() {
+    fun testGetAllNotes() {
         val noteList = noteDao.getNotes().getValueBlocking()
         val sortedNotes = testNotes.sortedByDescending { it.updateTimestamp }
 
@@ -46,6 +46,18 @@ class NoteDaoTest : DaoTest() {
                 assertThat(abstractContent).isEqualTo(expect.abstractContent)
             }
         }
+    }
+
+    @Test
+    fun testGetNote() {
+        val note = noteDao.getNote("note-2").getValueBlocking()
+
+        val expect = testNotes[2]
+        assertThat(note.id).isEqualTo(expect.id)
+        assertThat(note.createTimestamp).isEqualTo(expect.createTimestamp)
+        assertThat(note.updateTimestamp).isEqualTo(expect.updateTimestamp)
+        assertThat(note.title).isEqualTo(expect.title)
+        assertThat(note.abstractContent).isEqualTo(expect.abstractContent)
     }
 
     @Test
