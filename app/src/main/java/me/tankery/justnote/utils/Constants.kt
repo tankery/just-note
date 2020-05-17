@@ -20,7 +20,7 @@ const val PRESERVED_TAG_PINNED = "_pinned_"
 /**
  * Database named as note.db
  */
-const val NOTE_DATABASE_NAME = "note"
+const val NOTE_DATABASE_NAME = "note.db"
 /**
  * All notes with media items are stored in private storage in SD card
  */
