@@ -35,7 +35,7 @@ class MainNotesFragment : Fragment() {
         recyclerView.adapter = noteListAdapter
 
         viewModel.getNotes()
-            .observe(this, {notes -> noteListAdapter.submitList(notes)})
+            .observe(viewLifecycleOwner, {notes -> noteListAdapter.submitList(notes)})
     }
 
 }
