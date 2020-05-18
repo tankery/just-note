@@ -43,7 +43,7 @@ class NoteFragment : Fragment() {
         textHint = view.findViewById(android.R.id.hint)
 
         viewModel.getDetails()
-            .observe(this, {note -> updateDetails(note)})
+            .observe(viewLifecycleOwner, {note -> updateDetails(note)})
     }
 
     private fun updateDetails(note: NoteDetails) {

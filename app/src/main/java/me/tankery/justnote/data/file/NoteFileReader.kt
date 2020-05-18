@@ -1,5 +1,6 @@
 package me.tankery.justnote.data.file
 
+import android.annotation.SuppressLint
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +25,7 @@ class NoteFileReader(
      * TODO: 1. Deal with title
      * TODO: 2. Parse markdown file
      */
+    @SuppressLint("RestrictedApi")  // TODO: Use coroutines for async tasks.
     fun readContent(): LiveData<String> {
         val liveData = MutableLiveData<String>()
         ArchTaskExecutor.getIOThreadExecutor().execute {
